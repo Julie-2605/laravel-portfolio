@@ -59,9 +59,9 @@ Route::get('/forgot-password', function () {
     return view('auth.forgot-password');
 })->name('password.request');
 
-Route::get('/', [PortfolioController::class, 'index'])->name('home');
-Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
-Route::get('/portfolio', [ProjectController::class, 'index'])->name('portfolio');
-Route::get('/login', [ConnexionController::class, 'index'])->name('login');
-Route::get('/redirection-login', [ConnexionController::class, 'redirection'])->name('redirection-login');
-Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+// Route::get('/', [PortfolioController::class, 'index'])->name('home');
+// Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+// Route::get('/portfolio', [ProjectController::class, 'index'])->name('portfolio');
+// Route::get('/login', [ConnexionController::class, 'index'])->name('login');
+// Route::get('/redirection-login', [ConnexionController::class, 'redirection'])->name('redirection-login');
+// Route::get('/admin', [AdminController::class, 'index'])->name('admin');
