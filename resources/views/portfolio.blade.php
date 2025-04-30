@@ -304,7 +304,7 @@
                     <a href="#competences" class="text-gray-300 hover:text-white">Compétences</a>
                     <a href="#projets" class="text-gray-300 hover:text-white">Projets</a>
                     <a href="#contact" class="text-gray-300 hover:text-white">Contact</a>
-                    <a href="/login" class="text-gray-300 hover:text-white">Se connecter</a>
+                    <a href="{{ route('login') }}" class="text-gray-300 hover:text-white">Se connecter</a>
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center">

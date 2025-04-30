@@ -45,7 +45,7 @@
                         </a>
                     </nav>
                     <div class="px-4 py-6">
-                        <a href="#" class="flex items-center text-gray-300 hover:text-white">
+                        <a href="{{route('logout') }}" class="flex items-center text-gray-300 hover:text-white">
                             <i class="fas fa-sign-out-alt mr-3"></i>
                             Déconnexion
                         </a>
