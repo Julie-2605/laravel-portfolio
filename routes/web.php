@@ -3,13 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ConnexionController;
-use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProjectController;
 
-Route::get('/portfolio', function () {
-    return view('portfolio');
-})->name('portfolio');
+
+Route::get('/portfolio', [ProjectController::class, 'index'])->name('portfolio');
+
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
+
+Route::resource('admin/projects', ProjectController::class);
 
 // Pour le formulaire de contact
 Route::post('/contact', function () {

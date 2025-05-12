@@ -127,7 +127,7 @@
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Développement Front-end</h3>
                     <p class="text-gray-600">
-                        Maîtrise de HTML5, CSS3, JavaScript, Vue.js, React et des frameworks CSS comme Tailwind et Bootstrap.
+                        Maîtrise de HTML5, CSS3, JavaScript, Angular.js, React.js et des frameworks CSS comme Tailwind et Bootstrap.
                     </p>
                 </div>
                 <div class="p-6 bg-gray-50 rounded-lg shadow-md">
@@ -136,7 +136,7 @@
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Bases de données</h3>
                     <p class="text-gray-600">
-                        Conception et optimisation de bases de données MySQL, PostgreSQL et MongoDB.
+                        Conception et optimisation de bases de données MySQL et MongoDB.
                     </p>
                 </div>
                 <div class="p-6 bg-gray-50 rounded-lg shadow-md">
@@ -154,7 +154,7 @@
                     </div>
                     <h3 class="text-xl font-semibold mb-2">DevOps</h3>
                     <p class="text-gray-600">
-                        Déploiement et gestion de serveurs, CI/CD, Docker et expérience avec AWS et Digital Ocean.
+                        Déploiement et gestion de serveurs, CI/CD, Docker.
                     </p>
                 </div>
                 <div class="p-6 bg-gray-50 rounded-lg shadow-md">
@@ -163,7 +163,7 @@
                     </div>
                     <h3 class="text-xl font-semibold mb-2">UI/UX Design</h3>
                     <p class="text-gray-600">
-                        Conception d'interfaces utilisateur intuitives et esthétiques avec Figma et Adobe XD.
+                        Conception d'interfaces utilisateur intuitives et esthétiques avec Figma.
                     </p>
                 </div>
             </div>
@@ -178,30 +178,29 @@
                 <div class="w-16 h-1 bg-blue-600 mx-auto"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @for ($i = 1; $i <= 6; $i++)
+                @foreach ($projects as $project)
                 <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <img src="{{ asset('images/project-'.$i.'.jpg') }}" alt="Projet {{ $i }}" class="w-full h-48 object-cover" onerror="this.src='https://via.placeholder.com/600x400?text=Projet+{{ $i }}'">
+                    <img src="{{ $project->image }}" alt="Projet {{ $project->title }}" class="w-full h-48 object-cover" onerror="this.src='https://via.placeholder.com/600x400?text=Projet+{{ $project->id }}'">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Projet {{ $i }}</h3>
+                        <h3 class="text-xl font-semibold mb-2">{{ $project->title }}</h3>
                         <p class="text-gray-600 mb-4">
-                            Description du projet {{ $i }}. Une brève explication de ce que fait ce projet et des technologies utilisées.
+                            {{ $project->description }}
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-full">Laravel</span>
-                            <span class="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-full">Vue.js</span>
-                            <span class="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-full">MySQL</span>
+                            @foreach ($project->technologies ?? [] as $tech)
+                            <span class="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-full">{{ $tech }}</span>
+                            @endforeach
                         </div>
                         <div class="flex space-x-3">
-                            <a href="#" class="text-blue-600 hover:text-blue-800">
+                            @if (!empty($project->link))
+                            <a href="{{ $project->link }}" class="text-blue-600 hover:text-blue-800">
                                 <i class="fas fa-link"></i> Demo
                             </a>
-                            <a href="#" class="text-blue-600 hover:text-blue-800">
-                                <i class="fab fa-github"></i> GitHub
-                            </a>
+                            @endif
                         </div>
                     </div>
                 </div>
-                @endfor
+                @endforeach
             </div>
         </div>
     </section>
