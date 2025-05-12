@@ -68,6 +68,6 @@ class PortfolioController extends Controller
             ],
         ];
 
-        return view('portfolio.index', compact('projects', 'skillCategories'));
+        return view('portfolio', compact('projects', 'skillCategories'));
     }
 }
