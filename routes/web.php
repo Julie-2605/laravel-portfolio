@@ -18,7 +18,7 @@ Route::resource('projects', ProjectController::class);
 Route::resource('services', ServiceController::class);
 
 Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [ProjectController::class, 'admin'])->name('admin.dashboard');
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     
     Route::get('/portfolio', [ProjectController::class, 'portfolio'])->name('admin.portfolio');
 
@@ -33,7 +33,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/services', [AdminController::class, 'services'])->name('admin.services');
     Route::get('/services/{service}/edit', [ServiceController::class, 'edit'])->name('admin.services.edit');
     Route::put('/services/{service}', [ServiceController::class, 'update'])->name('admin.services.update');
-
 });
 
 Route::get('/quote', [QuoteController::class, 'submit'])->name('quote.request');

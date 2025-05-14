@@ -95,7 +95,7 @@
             <main class="flex-1 overflow-y-auto p-6 bg-gray-100">
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-semibold text-gray-800">Gestion des Services</h1>
-                    <a href="{{ route('projects.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center">
+                    <a href="{{ route('services.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center">
                         <i class="fas fa-plus mr-2"></i> Ajouter un service
                     </a>
                 </div>
@@ -150,11 +150,12 @@
                     <div class="bg-white rounded-lg shadow-md overflow-hidden">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2">{{ $service->name }}</h3>
-                            <p class="text-gray-600 mb-4 line-clamp-2">{{ $service->price }}</p>
+                            <p class="text-gray-600 mb-4 line-clamp-2">{{ $service->price }} €</p>
+
                             <div class="flex justify-between items-center">
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('services.edit', $services->id) }}" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
-                                    <form action="{{ route('services.destroy', $services->id) }}" method="POST" style="display:inline;">
+                                    <a href="{{ route('services.edit', $service->id) }}" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
+                                    <form action="{{ route('services.destroy', $service->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Supprimer ce service ?')">

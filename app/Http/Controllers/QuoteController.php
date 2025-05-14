@@ -20,6 +20,7 @@ class QuoteController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'services' => 'required|array|min:1',
+            'details' => 'string',
         ]);
 
         $services = Service::whereIn('id', $request->services)->get();

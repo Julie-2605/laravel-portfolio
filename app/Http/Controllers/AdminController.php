@@ -8,10 +8,12 @@ use App\Models\Service;
 
 class AdminController extends Controller
 {
-    public function admin()
+    public function index()
     {
         $projects = Project::all();
-        return view('admin.dashboard', compact('projects'));
+        $services = Service::all();
+
+        return view('admin.dashboard', compact('projects', 'services'));
     }
 
     public function portfolio(Request $request)

@@ -233,9 +233,9 @@
                 <!-- Recent products -->
                 <div class="bg-white rounded-lg shadow-md">
                     <div class="px-6 py-4 border-b flex justify-between items-center">
-                        <h2 class="text-lg font-semibold text-gray-800">Produits récents</h2>
+                        <h2 class="text-lg font-semibold text-gray-800">Services</h2>
                         <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
-                            <i class="fas fa-plus mr-2"></i> Ajouter un produit
+                            <i class="fas fa-plus mr-2"></i> Ajouter un service
                         </a>
                     </div>
                     <div class="overflow-x-auto">
@@ -243,13 +243,11 @@
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produit</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach ($services as $service)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
@@ -257,79 +255,31 @@
                                                 <img class="h-10 w-10 rounded-md object-cover" src="https://placehold.co/40x40?text=P1" alt="Produit 1">
                                             </div>
                                             <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Template Premium</div>
+                                                <div class="text-sm font-medium text-gray-900">{{ $service->name }}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">Templates</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">49,99 €</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">Illimité</div>
+                                        <div class="text-sm text-gray-900">{{ $service->price }} €</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <a href="#" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
-                                        <a href="#" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></a>
+                                        <a href="{{ route('services.edit', $service->id) }}" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
+                                        <form action="{{ route('services.destroy', $service->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Supprimer ce service ?')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0 h-10 w-10">
-                                                <img class="h-10 w-10 rounded-md object-cover" src="https://placehold.co/40x40?text=P2" alt="Produit 2">
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Plugin WordPress</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">Plugins</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">29,99 €</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">Illimité</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <a href="#" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
-                                        <a href="#" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0 h-10 w-10">
-                                                <img class="h-10 w-10 rounded-md object-cover" src="https://placehold.co/40x40?text=P3" alt="Produit 3">
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Cours en ligne</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">Formation</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">99,99 €</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">Illimité</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <a href="#" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
-                                        <a href="#" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
+                                @endforeach
+
                             </tbody>
                         </table>
                     </div>
                     <div class="px-6 py-3 border-t">
-                        <a href="#" class="text-blue-600 hover:text-blue-900">Voir tous les produits →</a>
+                        <a href="{{ route('admin.services') }}" class="text-blue-600 hover:text-blue-900">Voir tous les services →</a>
                     </div>
                 </div>
             </main>

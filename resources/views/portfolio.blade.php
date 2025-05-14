@@ -329,7 +329,7 @@
                 </div>
 
                 <div class="text-gray-800 font-semibold">
-                    Total estimé : <span id="total">0</span> €
+                    Total estimé : <span id="total-quote">0</span> €
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
