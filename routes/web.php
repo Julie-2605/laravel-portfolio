@@ -11,7 +11,9 @@ use App\Http\Controllers\ServiceController;
 
 Route::get('/', [PortfolioController::class, 'index'])->name('portfolio');
 
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+Route::post('/quote', [QuoteController::class, 'submit'])->name('quote.submit');
 
 Route::resource('projects', ProjectController::class);
 
@@ -30,12 +32,10 @@ Route::prefix('admin')->group(function () {
         return view('admin.statistiques');
     })->name('admin.statistiques');
 
-    Route::get('/services', [AdminController::class, 'services'])->name('admin.services');
+    Route::get('/services', [ServiceController::class, 'index'])->name('admin.services');
     Route::get('/services/{service}/edit', [ServiceController::class, 'edit'])->name('admin.services.edit');
     Route::put('/services/{service}', [ServiceController::class, 'update'])->name('admin.services.update');
 });
-
-Route::get('/quote', [QuoteController::class, 'submit'])->name('quote.request');
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     // Routes d'administration...

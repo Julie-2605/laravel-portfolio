@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
-    public function store(Request $request)
+    public function submit(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -24,6 +24,6 @@ class ContactController extends Controller
                 ->subject($validated['subject']);
         });
 
-        return redirect()->back()->with('success', 'Votre message a été envoyé avec succès!');
+        return redirect()->back()->with('success-contact', 'Votre message a été envoyé avec succès!');
     }
 }

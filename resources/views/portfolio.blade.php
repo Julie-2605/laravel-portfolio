@@ -238,8 +238,8 @@
                             Envoyer le message
                         </button>
                     </form>
-                    @if(session('success'))
-                    <div class="text-green-600">{{ session('success') }}</div>
+                    @if(session('success-contact'))
+                    <div class="text-green-600">{{ session('success-contact') }}</div>
                     @endif
                     @if ($errors->any())
                     <div class="text-red-600 mb-4">
@@ -312,7 +312,7 @@
                 <p class="text-gray-600">Sélectionnez les services souhaités et recevez une estimation personnalisée.</p>
             </div>
 
-            <form action="{{ route('quote.request') }}" method="POST" class="bg-white p-8 rounded shadow space-y-6">
+            <form action="{{ route('quote.submit') }}" method="POST" class="bg-white p-8 rounded shadow space-y-6">
                 @csrf
 
                 <div>
@@ -320,14 +320,13 @@
                     @foreach ($services as $service)
                     <div class="flex justify-between items-center mb-2">
                         <div>
-                            <input type="checkbox" name="services[]" value="{{ $service->id }}" class="mr-2">
+                            <input type="checkbox" class="checkbox-quote" name="services[]" value="{{ $service->id }}" data-price="{{ $service->price }}" class="mr-2">
                             {{ $service->name }}
                         </div>
                         <span class="text-sm text-gray-500">{{ number_format($service->price, 2) }} €</span>
                     </div>
                     @endforeach
                 </div>
-
                 <div class="text-gray-800 font-semibold">
                     Total estimé : <span id="total-quote">0</span> €
                 </div>
@@ -337,10 +336,22 @@
                     <input type="email" name="email" placeholder="Votre email" class="border px-4 py-2 rounded" required>
                 </div>
 
-                <textarea name="message" rows="4" class="w-full border px-4 py-2 rounded" placeholder="Détails supplémentaires..."></textarea>
+                <textarea name="details" rows="4" class="w-full border px-4 py-2 rounded" placeholder="Détails supplémentaires..."></textarea>
 
                 <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Envoyer ma demande</button>
             </form>
+            @if(session('success-quote'))
+                    <div class="text-green-600">{{ session('success-quote') }}</div>
+                    @endif
+                    @if ($errors->any())
+                    <div class="text-red-600 mb-4">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
         </div>
     </section>
 
@@ -370,8 +381,27 @@
     </footer>
 
     <script>
+        //Quote Price Update
+        document.addEventListener("DOMContentLoaded", () => {
+            let price = document.querySelector('#total-quote');
+            let checkboxes = document.querySelectorAll('.checkbox-quote');
 
+            function updatePrice() {
+                let total = 0;
 
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        total += parseFloat(checkbox.dataset.price);
+                    }
+                });
+
+                price.textContent = total.toFixed(2);
+            }
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updatePrice);
+            })
+        });
 
         // Mobile menu toggle
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
