@@ -22,7 +22,7 @@ Route::resource('services', ServiceController::class);
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     
-    Route::get('/portfolio', [ProjectController::class, 'portfolio'])->name('admin.portfolio');
+    Route::get('/portfolio', [AdminController::class, 'portfolio'])->name('admin.portfolio');
 
     Route::get('/projects/{project}/edit', [ProjectController::class, 'edit'])->name('admin.projects.edit');
     Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('admin.projects.update');
@@ -32,7 +32,7 @@ Route::prefix('admin')->group(function () {
         return view('admin.statistiques');
     })->name('admin.statistiques');
 
-    Route::get('/services', [ServiceController::class, 'index'])->name('admin.services');
+    Route::get('/services', [AdminController::class, 'services'])->name('admin.services');
     Route::get('/services/{service}/edit', [ServiceController::class, 'edit'])->name('admin.services.edit');
     Route::put('/services/{service}', [ServiceController::class, 'update'])->name('admin.services.update');
 });

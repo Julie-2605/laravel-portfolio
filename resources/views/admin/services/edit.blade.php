@@ -78,7 +78,7 @@
                     </div>
                     <div class="relative">
                         <button class="flex items-center text-gray-700 focus:outline-none">
-                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('images/admin-avatar.jpg') }}" alt="Avatar" onerror="this.src='https://placehold.co/32x32?text=Admin'">
+                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('asset/project-dev.png') }}" alt="Avatar">
                             <span class="mx-2">Admin</span>
                             <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
@@ -89,47 +89,23 @@
             <!-- Main content -->
             <main class="flex-1 overflow-y-auto p-6 bg-gray-100">
                 <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-2xl font-semibold text-gray-800">Gestion du Portfolio</h1>
+                    <h1 class="text-2xl font-semibold text-gray-800">Gestion des Services</h1>
                 </div>
 
                 <!-- Projects Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-                    <form action="{{ route('projects.update', $project->id) }}" method="POST" class="bg-white p-6 rounded shadow">
+                    <form action="{{ route('services.update', $service->id) }}" method="POST" class="bg-white p-6 rounded shadow">
                         @csrf
                         @method('PUT')
 
                         <div class="mb-4">
-                            <label for="title" class="block text-gray-700">Titre</label>
-                            <input type="text" name="title" id="title" value="{{ old('title', $project->title) }}" class="w-full border p-2 rounded" required>
+                            <label for="name" class="block text-gray-700">Nom</label>
+                            <input type="text" name="name" id="name" value="{{ old('name', $service->name) }}" class="w-full border p-2 rounded" required>
                         </div>
 
                         <div class="mb-4">
-                            <label for="description" class="block text-gray-700">Description</label>
-                            <textarea name="description" id="description" class="w-full border p-2 rounded" required>{{ old('description', $project->description) }}</textarea>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="image" class="block text-gray-700">Image (URL)</label>
-                            <input type="url" name="image" id="image" value="{{ old('image', $project->image) }}" class="w-full border p-2 rounded">
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="technologies" class="block text-gray-700">Technologies</label>
-                            <input type="text" name="technologies" id="technologies" value="{{ old('technologies', is_array($project->technologies) ? implode(',', $project->technologies) : $project->technologies) }}" class="w-full border p-2 rounded">
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="status" class="block text-gray-700">Statut</label>
-                            <select name="status" class="w-full border p-2 rounded">
-                                <option value="planned" {{ old('status', $project->status) === 'planned' ? 'selected' : '' }}>Planned</option>
-                                <option value="in_progress" {{ old('status', $project->status) === 'in_progress' ? 'selected' : '' }}>In Progress</option>
-                                <option value="completed" {{ old('status', $project->status) === 'completed' ? 'selected' : '' }}>Completed</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="date" class="block text-gray-700">Date</label>
-                            <input type="date" name="date" id="date" value="{{ old('date', $project->date) }}" class="w-full border p-2 rounded">
+                            <label for="price" class="block text-gray-700">Prix</label>
+                            <input type="number" name="price" id="price" value="{{ old('price', $service->price) }}" class="w-full border p-2 rounded" step="0.01" required>
                         </div>
 
                         <div class="text-right">

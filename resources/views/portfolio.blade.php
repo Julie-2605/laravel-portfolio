@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="md:w-1/2">
-                    <img src="{{ asset('images/profile.jpg') }}" alt="Photo de profil" class="rounded-lg shadow-xl mx-auto" onerror="this.src='/asset/project-dev-1.png'">
+                    <img src="{{ asset('asset/project-dev.png') }}" alt="Photo de profil" class="rounded-lg shadow-xl mx-auto">
                 </div>
             </div>
         </div>
@@ -83,11 +83,11 @@
             </div>
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/3 mb-10 md:mb-0">
-                    <img src="{{ asset('images/about.jpg') }}" alt="À propos" class="rounded-lg shadow-lg mx-auto" onerror="this.src='/asset/project-dev-1.png'">
+                    <img src="{{ asset('asset/project-dev.png') }}" alt="À propos" class="rounded-lg shadow-lg mx-auto">
                 </div>
                 <div class="md:w-2/3 md:pl-12">
                     <p class="text-lg text-gray-600 mb-6">
-                        Je suis une développeuse web passionné avec plus de 2 années d'expérience dans la création d'applications web modernes et performantes. J'aime résoudre des problèmes complexes et transformer des idées en produits numériques.
+                        Je suis une développeuse web passionnée avec plus de 2 années d'expérience dans la création d'applications web modernes et performantes. J'aime résoudre des problèmes complexes et transformer des idées en produits numériques.
                     </p>
                     <p class="text-lg text-gray-600 mb-6">
                         Mon parcours m'a permis d'acquérir une solide expertise en développement front-end et back-end, avec une spécialisation en Javascript.
@@ -182,7 +182,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($projects as $project)
                 <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <img src="{{ $project->image }}" alt="Projet {{ $project->title }}" class="w-full h-48 object-cover" onerror="this.src='/asset/project-dev-{{ $project->id }}.png'">
+                    <img src="{{ asset('storage/' . $project->image) }}" alt="Projet {{ $project->title }}" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">{{ $project->title }}</h3>
                         <p class="text-gray-600 mb-4">

@@ -78,7 +78,7 @@
                     </div>
                     <div class="relative">
                         <button class="flex items-center text-gray-700 focus:outline-none">
-                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('images/admin-avatar.jpg') }}" alt="Avatar" onerror="this.src='https://placehold.co/32x32?text=Admin'">
+                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('asset/project-dev.png') }}" alt="Avatar">
                             <span class="mx-2">Admin</span>
                             <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
@@ -94,7 +94,7 @@
 
                 <!-- Projects Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-                    <form action="{{ route('projects.update', $project->id) }}" method="POST" class="bg-white p-6 rounded shadow">
+                    <form action="{{ route('projects.update', $project->id) }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded shadow">
                         @csrf
                         @method('PUT')
 
@@ -109,8 +109,8 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="image" class="block text-gray-700">Image (URL)</label>
-                            <input type="url" name="image" id="image" value="{{ old('image', $project->image) }}" class="w-full border p-2 rounded">
+                            <label for="image" class="block text-gray-700">Image</label>
+                            <input type="file" name="image" id="image" value="{{ old('image', $project->image) }}" accept="image/*" class="w-full border p-2 rounded">
                         </div>
 
                         <div class="mb-4">

@@ -10,16 +10,7 @@ class PortfolioController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Project::query();
-
-        if ($request->filled('search')) {
-            $search = $request->input('search');
-            $query->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('technologies', 'like', "%{$search}%");
-        }
-
-        $projects = $query->get();
+        $projects = Project::all();
         $services = Service::all();
 
         return view('portfolio', compact('projects', 'services'));

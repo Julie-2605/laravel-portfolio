@@ -83,7 +83,7 @@
                     </div>
                     <div class="relative">
                         <button class="flex items-center text-gray-700 focus:outline-none">
-                            <img class="h-8 w-8 rounded-full object-cover" src="/asset/project-dev-1.png" alt="Avatar">
+                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('asset/project-dev.png') }}" alt="Avatar">
                             <span class="mx-2">Admin</span>
                             <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
@@ -149,7 +149,7 @@
                     @foreach ($projects as $project)
                     <div class="bg-white rounded-lg shadow-md overflow-hidden">
                         <div class="relative">
-                            <img src="{{ $project->image }}" alt="Projet 1" class="w-full h-48 object-cover">
+                            <img src="{{ asset('storage/' . $project->image) }}" alt="Projet" class="w-full h-48 object-cover">
                             <div class="absolute top-2 right-2">
                                 <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">{{ $project->status}}</span>
                             </div>

@@ -4,41 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $projects = Project::all();
-        
-        return view('portfolio', compact('projects'));
-    }
-
-    public function admin()
-    {
-        $projects = Project::all();
-        return view('admin.dashboard', compact('projects'));
-    }
-
-    public function portfolio(Request $request)
-    {
-        $query = Project::query();
-
-        if($request->filled('search')) {
-            $search = $request->input('search');
-             $query->where('title', 'like', "%{$search}%")
-              ->orWhere('description', 'like', "%{$search}%")
-              ->orWhere('technologies', 'like', "%{$search}%");
-        };
-
-        $projects = $query->get();
-
-        return view('admin.portfolio', compact('projects'));
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -55,11 +24,16 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png',
             'technologies' => 'nullable|string',
             'status' => 'nullable|string',
             'date' => 'nullable|date',
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('asset', 'public');
+            $validated['image'] = $path;
+        }
 
         $validated['technologies'] = array_map('trim', explode(',', $validated['technologies'] ?? ''));
 
@@ -92,11 +66,20 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png',
             'technologies' => 'nullable|string',
             'status' => 'nullable|string',
             'date' => 'nullable|date',
         ]);
+
+        if ($request->hasFile('image')) {
+            if ($project->image && Storage::disk('public')->exists($project->image)) {
+                Storage::disk('public')->delete($project->image);
+            }
+
+            $path = $request->file('image')->store('asset', 'public');
+            $validated['image'] = $path;
+        }
 
         $validated['technologies'] = array_map('trim', explode(',', $validated['technologies'] ?? ''));
 
@@ -110,6 +93,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        if ($project->image && Storage::disk('public')->exists($project->image)) {
+            Storage::disk('public')->delete($project->image);
+        }
+
         $project->delete();
         return redirect()->route('admin.portfolio')->with('success', 'Projet supprimé.');
     }

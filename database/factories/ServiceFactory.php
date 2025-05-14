@@ -18,7 +18,7 @@ class ServiceFactory extends Factory
     {
         return [
             'name' => $this->faker->sentence(3),
-            'price' => $this->faker->numberBetween($min = 100, $max = 5000),
+            'price' => $this->faker->randomFloat(2, 100, 5000),
         ];
     }
 }

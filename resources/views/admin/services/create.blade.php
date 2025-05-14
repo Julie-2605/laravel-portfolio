@@ -78,7 +78,7 @@
                     </div>
                     <div class="relative">
                         <button class="flex items-center text-gray-700 focus:outline-none">
-                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('images/admin-avatar.jpg') }}" alt="Avatar" onerror="this.src='https://placehold.co/32x32?text=Admin'">
+                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('asset/project-dev.png') }}" alt="Avatar">
                             <span class="mx-2">Admin</span>
                             <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
@@ -89,47 +89,23 @@
             <!-- Main content -->
             <main class="flex-1 overflow-y-auto p-6 bg-gray-100">
                 <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-2xl font-semibold text-gray-800">Gestion du Portfolio</h1>
+                    <h1 class="text-2xl font-semibold text-gray-800">Gestion des Services</h1>
                 </div>
 
                 <!-- Projects Grid -->
                 <div class=" justify-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-                    <form action="{{ route('projects.store') }}" method="POST" class="bg-white p-6 rounded shadow">
+                    <form action="{{ route('services.store') }}" method="POST" class="bg-white p-6 rounded shadow">
                         @csrf
                         @method('POST')
 
                         <div class="mb-4">
-                            <label for="title" class="block text-gray-700">Titre</label>
-                            <input type="text" name="title" id="title" placeholder="Titre" class="w-full border p-2 rounded" required>
+                            <label for="name" class="block text-gray-700">Nom</label>
+                            <input type="text" name="name" id="name" placeholder="Nom" class="w-full border p-2 rounded" required>
                         </div>
 
                         <div class="mb-4">
-                            <label for="description" class="block text-gray-700">Description</label>
-                            <textarea name="description" id="description" placeholder="Description" class="w-full border p-2 rounded" required></textarea>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="image" class="block text-gray-700">Image (URL)</label>
-                            <input type="url" name="image" id="image" placeholder="Url Image" class="w-full border p-2 rounded">
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="technologies" class="block text-gray-700">Technologies</label>
-                            <input type="text" name="technologies" id="technologies" placeholder="Liste Technologies" class="w-full border p-2 rounded">
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="status" class="block text-gray-700">Statut</label>
-                            <select name="status" class="w-full border p-2 rounded">
-                                <option value="planned">Planned</option>
-                                <option value="in_progress">In Progress</option>
-                                <option value="completed">Completed</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="date" class="block text-gray-700">Date</label>
-                            <input type="date" name="date" id="date" class="w-full border p-2 rounded">
+                            <label for="price" class="block text-gray-700">Prix</label>
+                            <input type="number" name="price" id="price" step="0.01" class="w-full border p-2 rounded">
                         </div>
 
                         <div class="text-right">

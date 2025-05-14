@@ -62,14 +62,14 @@
                     <button class="text-gray-500 focus:outline-none md:hidden">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <form method="GET" action="{{ route('admin.portfolio') }}" class="relative mx-4 lg:mx-0">
+                    <form method="GET" action="{{ route('admin.services') }}" class="relative mx-4 lg:mx-0">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                             <i class="fas fa-search text-gray-500"></i>
                         </span>
                         <input
                             name="search"
                             type="text"
-                            placeholder="Rechercher un projet"
+                            placeholder="Rechercher un service"
                             value="{{ request('search') }}"
                             class="w-32 sm:w-64 pl-10 pr-4 py-2 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
                     </form>
@@ -83,7 +83,7 @@
                     </div>
                     <div class="relative">
                         <button class="flex items-center text-gray-700 focus:outline-none">
-                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('images/admin-avatar.jpg') }}" alt="Avatar" onerror="this.src='/asset/project-dev-1.png'">
+                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('asset/project-dev.png') }}" alt="Avatar">
                             <span class="mx-2">Admin</span>
                             <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
@@ -98,48 +98,6 @@
                     <a href="{{ route('services.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center">
                         <i class="fas fa-plus mr-2"></i> Ajouter un service
                     </a>
-                </div>
-
-                <!-- Filters -->
-                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-                        <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
-                            <div>
-                                <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
-                                <select id="category" class="w-full md:w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
-                                    <option value="">Toutes les catégories</option>
-                                    <option value="web">Web Development</option>
-                                    <option value="mobile">Mobile Apps</option>
-                                    <option value="design">UI/UX Design</option>
-                                    <option value="branding">Branding</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
-                                <select id="status" class="w-full md:w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
-                                    <option value="">Tous les statuts</option>
-                                    <option value="completed">Terminé</option>
-                                    <option value="in-progress">En cours</option>
-                                    <option value="planned">Planifié</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
-                                <select id="date" class="w-full md:w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
-                                    <option value="">Toutes les dates</option>
-                                    <option value="this-month">Ce mois-ci</option>
-                                    <option value="last-month">Le mois dernier</option>
-                                    <option value="this-year">Cette année</option>
-                                    <option value="last-year">L'année dernière</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
-                                <i class="fas fa-filter mr-2"></i> Filtrer
-                            </button>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Projects Grid -->

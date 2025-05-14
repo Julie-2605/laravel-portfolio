@@ -8,16 +8,6 @@ use App\Models\Service;
 class ServiceController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $services = Service::all();
-        
-        return view('admin.services', compact('services'));
-    }
-
-    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -32,7 +22,7 @@ class ServiceController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'price' => 'required|decimal',
+            'price' => 'required|numeric|decimal:2|min:0',
         ]);
 
         Service::create($validated);
@@ -63,10 +53,12 @@ class ServiceController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'price' => 'required|decimal',
+            'price' => 'required|numeric|decimal:2|min:0',
         ]);
 
         $service->update($validated);
+
+        return redirect()->route('admin.services')->with('success', 'Service ajouté.');
     }
 
     /**
