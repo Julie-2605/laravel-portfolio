@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body class="bg-gray-50 text-gray-800">
     <!-- Navigation -->
     <nav class="bg-white shadow-sm">
@@ -66,7 +68,7 @@
                     </div>
                 </div>
                 <div class="md:w-1/2">
-                    <img src="{{ asset('images/profile.jpg') }}" alt="Photo de profil" class="rounded-lg shadow-xl mx-auto" onerror="this.src='https://via.placeholder.com/500x500?text=Votre+Photo'">
+                    <img src="{{ asset('images/profile.jpg') }}" alt="Photo de profil" class="rounded-lg shadow-xl mx-auto" onerror="this.src='/asset/project-dev-1.png'">
                 </div>
             </div>
         </div>
@@ -81,11 +83,11 @@
             </div>
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/3 mb-10 md:mb-0">
-                    <img src="{{ asset('images/about.jpg') }}" alt="À propos" class="rounded-lg shadow-lg mx-auto" onerror="this.src='https://via.placeholder.com/400x500?text=À+Propos'">
+                    <img src="{{ asset('images/about.jpg') }}" alt="À propos" class="rounded-lg shadow-lg mx-auto" onerror="this.src='/asset/project-dev-1.png'">
                 </div>
                 <div class="md:w-2/3 md:pl-12">
                     <p class="text-lg text-gray-600 mb-6">
-                        Je suis un développeur web passionné avec plus de 2 années d'expérience dans la création d'applications web modernes et performantes. J'aime résoudre des problèmes complexes et transformer des idées en produits numériques.
+                        Je suis une développeuse web passionné avec plus de 2 années d'expérience dans la création d'applications web modernes et performantes. J'aime résoudre des problèmes complexes et transformer des idées en produits numériques.
                     </p>
                     <p class="text-lg text-gray-600 mb-6">
                         Mon parcours m'a permis d'acquérir une solide expertise en développement front-end et back-end, avec une spécialisation en Javascript.
@@ -180,7 +182,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($projects as $project)
                 <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <img src="{{ $project->image }}" alt="Projet {{ $project->title }}" class="w-full h-48 object-cover" onerror="this.src='https://via.placeholder.com/600x400?text=Projet+{{ $project->id }}'">
+                    <img src="{{ $project->image }}" alt="Projet {{ $project->title }}" class="w-full h-48 object-cover" onerror="this.src='/asset/project-dev-{{ $project->id }}.png'">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">{{ $project->title }}</h3>
                         <p class="text-gray-600 mb-4">
@@ -236,6 +238,18 @@
                             Envoyer le message
                         </button>
                     </form>
+                    @if(session('success'))
+                    <div class="text-green-600">{{ session('success') }}</div>
+                    @endif
+                    @if ($errors->any())
+                    <div class="text-red-600 mb-4">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 </div>
                 <div class="md:w-1/2">
                     <div class="bg-gray-50 p-8 rounded-lg shadow-md">
@@ -289,12 +303,53 @@
         </div>
     </section>
 
+
+    <!-- Quote -->
+    <section id="devis" class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">Demande de devis</h2>
+                <p class="text-gray-600">Sélectionnez les services souhaités et recevez une estimation personnalisée.</p>
+            </div>
+
+            <form action="{{ route('quote.request') }}" method="POST" class="bg-white p-8 rounded shadow space-y-6">
+                @csrf
+
+                <div>
+                    <label class="block text-gray-700 mb-2">Liste des services</label>
+                    @foreach ($services as $service)
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <input type="checkbox" name="services[]" value="{{ $service->id }}" class="mr-2">
+                            {{ $service->name }}
+                        </div>
+                        <span class="text-sm text-gray-500">{{ number_format($service->price, 2) }} €</span>
+                    </div>
+                    @endforeach
+                </div>
+
+                <div class="text-gray-800 font-semibold">
+                    Total estimé : <span id="total">0</span> €
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" name="name" placeholder="Votre nom" class="border px-4 py-2 rounded" required>
+                    <input type="email" name="email" placeholder="Votre email" class="border px-4 py-2 rounded" required>
+                </div>
+
+                <textarea name="message" rows="4" class="w-full border px-4 py-2 rounded" placeholder="Détails supplémentaires..."></textarea>
+
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Envoyer ma demande</button>
+            </form>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-6 md:mb-0">
-                    <h2 class="text-2xl font-bold">Julie Carioou</h2>
+                    <h2 class="text-2xl font-bold">Julie Cariou</h2>
                     <p class="text-gray-400 mt-2">Développeuse Web Full Stack</p>
                 </div>
                 <div class="flex flex-wrap justify-center gap-6">
@@ -315,6 +370,9 @@
     </footer>
 
     <script>
+
+
+
         // Mobile menu toggle
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
@@ -323,19 +381,19 @@
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                
+
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
+
                 if (targetElement) {
                     window.scrollTo({
                         top: targetElement.offsetTop,
                         behavior: 'smooth'
                     });
                 }
-                
+
                 // Close mobile menu if open
                 const mobileMenu = document.getElementById('mobile-menu');
                 if (!mobileMenu.classList.contains('hidden')) {
@@ -345,4 +403,5 @@
         });
     </script>
 </body>
+
 </html>

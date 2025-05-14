@@ -4,39 +4,39 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ConnexionController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\ServiceController;
 
-
-Route::get('/portfolio', [ProjectController::class, 'index'])->name('portfolio');
+Route::get('/', [PortfolioController::class, 'index'])->name('portfolio');
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
 
-Route::resource('admin/projects', ProjectController::class);
+Route::resource('projects', ProjectController::class);
 
-// Pour le formulaire de contact
-Route::post('/contact', function () {
-    // Logique de traitement du formulaire
-    return redirect()->back()->with('success', 'Message envoyé avec succès!');
-})->name('contact.submit');
+Route::resource('services', ServiceController::class);
 
 Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/dashboard', [ProjectController::class, 'admin'])->name('admin.dashboard');
     
-    Route::get('/portfolio', function () {
-        return view('admin.portfolio');
-    })->name('admin.portfolio');
-    
+    Route::get('/portfolio', [ProjectController::class, 'portfolio'])->name('admin.portfolio');
+
+    Route::get('/projects/{project}/edit', [ProjectController::class, 'edit'])->name('admin.projects.edit');
+    Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('admin.projects.update');
+
     // Ajoutez d'autres routes pour les statistiques et les produits
     Route::get('/statistiques', function () {
         return view('admin.statistiques');
     })->name('admin.statistiques');
-    
-    Route::get('/produits', function () {
-        return view('admin.produits');
-    })->name('admin.produits');
+
+    Route::get('/services', [AdminController::class, 'services'])->name('admin.services');
+    Route::get('/services/{service}/edit', [ServiceController::class, 'edit'])->name('admin.services.edit');
+    Route::put('/services/{service}', [ServiceController::class, 'update'])->name('admin.services.update');
+
 });
+
+Route::get('/quote', [QuoteController::class, 'submit'])->name('quote.request');
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     // Routes d'administration...
@@ -60,10 +60,3 @@ Route::get('/auth/redirect', function () {
 Route::get('/forgot-password', function () {
     return view('auth.forgot-password');
 })->name('password.request');
-
-// Route::get('/', [PortfolioController::class, 'index'])->name('home');
-// Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
-// Route::get('/portfolio', [ProjectController::class, 'index'])->name('portfolio');
-// Route::get('/login', [ConnexionController::class, 'index'])->name('login');
-// Route::get('/redirection-login', [ConnexionController::class, 'redirection'])->name('redirection-login');
-// Route::get('/admin', [AdminController::class, 'index'])->name('admin');

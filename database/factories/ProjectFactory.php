@@ -19,7 +19,7 @@ class ProjectFactory extends Factory
         return [
             'title' => $this->faker->sentence(3),
             'description' => $this->faker->paragraph(),
-            'image' => 'https://via.placeholder.com/600x400',
+            'image' => 'https://placehold.co/600x400',
             'status' => 'completed',
             'technologies' => ['Laravel', 'React.js'],
             'date' => $this->faker->date(),

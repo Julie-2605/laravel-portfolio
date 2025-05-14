@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use ApiPlatform\Metadata\ApiResource;
 
+#[ApiResource]
 class Project extends Model
 {
     use HasFactory;
@@ -20,6 +22,5 @@ class Project extends Model
 
     protected $casts = [
         'technologies' => 'array',
-        'date' => 'date',
     ];
 }

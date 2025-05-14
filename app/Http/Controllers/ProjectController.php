@@ -16,6 +16,28 @@ class ProjectController extends Controller
         return view('portfolio', compact('projects'));
     }
 
+    public function admin()
+    {
+        $projects = Project::all();
+        return view('admin.dashboard', compact('projects'));
+    }
+
+    public function portfolio(Request $request)
+    {
+        $query = Project::query();
+
+        if($request->filled('search')) {
+            $search = $request->input('search');
+             $query->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%")
+              ->orWhere('technologies', 'like', "%{$search}%");
+        };
+
+        $projects = $query->get();
+
+        return view('admin.portfolio', compact('projects'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -29,17 +51,20 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-         $validated = $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => 'nullable|url',
-            'tags' => 'nullable|string',
-            'link' => 'nullable|url',
+            'technologies' => 'nullable|string',
+            'status' => 'nullable|string',
+            'date' => 'nullable|date',
         ]);
+
+        $validated['technologies'] = array_map('trim', explode(',', $validated['technologies'] ?? ''));
 
         Project::create($validated);
 
-        return redirect()->route('portfolio')->with('success', 'Projet ajouté.');
+        return redirect()->route('admin.portfolio')->with('success', 'Projet ajouté.');
     }
 
     /**
@@ -53,7 +78,7 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Project $project)
     {
         return view('admin.projects.edit', compact('project'));
     }
@@ -67,15 +92,16 @@ class ProjectController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => 'nullable|url',
-            'tags' => 'nullable|string',
-            'link' => 'nullable|url',
+            'technologies' => 'nullable|string',
+            'status' => 'nullable|string',
+            'date' => 'nullable|date',
         ]);
 
-        $validated['tags'] = array_map('trim', explode(',', $validated['tags'] ?? ''));
+        $validated['technologies'] = array_map('trim', explode(',', $validated['technologies'] ?? ''));
 
         $project->update($validated);
 
-        return redirect()->route('portfolio')->with('success', 'Projet mis à jour.');
+        return redirect()->route('admin.portfolio')->with('success', 'Projet mis à jour.');
     }
 
     /**
@@ -84,6 +110,6 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
-        return redirect()->route('portfolio')->with('success', 'Projet supprimé.');
+        return redirect()->route('admin.portfolio')->with('success', 'Projet supprimé.');
     }
 }
