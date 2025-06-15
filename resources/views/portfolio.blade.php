@@ -341,17 +341,17 @@
                 <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Envoyer ma demande</button>
             </form>
             @if(session('success-quote'))
-                    <div class="text-green-600">{{ session('success-quote') }}</div>
-                    @endif
-                    @if ($errors->any())
-                    <div class="text-red-600 mb-4">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
+            <div class="text-green-600">{{ session('success-quote') }}</div>
+            @endif
+            @if ($errors->any())
+            <div class="text-red-600 mb-4">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
         </div>
     </section>
 
@@ -369,7 +369,16 @@
                     <a href="#competences" class="text-gray-300 hover:text-white">Compétences</a>
                     <a href="#projets" class="text-gray-300 hover:text-white">Projets</a>
                     <a href="#contact" class="text-gray-300 hover:text-white">Contact</a>
-                    <a href="{{route('login')}}" class="text-gray-300 hover:text-white">Se connecter</a>
+                    @auth
+                    <a href="{{ route('admin.dashboard') }}"  class="text-gray-300 hover:text-white">Admin</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit"  class="text-gray-300 hover:text-white">Déconnexion</button>
+                    </form>
+                    @else
+                    <a href="{{ route('login') }}"  class="text-gray-300 hover:text-white">Se connecter</a>
+                    <a href="{{ route('register') }}"  class="text-gray-300 hover:text-white">S'inscrire</a>
+                    @endauth
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center">
@@ -381,26 +390,36 @@
     </footer>
 
     <script>
-        //Quote Price Update
+        // //Quote Price Update
         document.addEventListener("DOMContentLoaded", () => {
-            let price = document.querySelector('#total-quote');
-            let checkboxes = document.querySelectorAll('.checkbox-quote');
+            const price = document.querySelector('#total-quote');
+            const checkboxes = document.querySelectorAll('.checkbox-quote');
 
-            function updatePrice() {
-                let total = 0;
+            function updateTotal() {
+                const selected = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
 
-                checkboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        total += parseFloat(checkbox.dataset.price);
-                    }
-                });
-
-                price.textContent = total.toFixed(2);
+                fetch("{{ route('quote.calculate') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value
+                        },
+                        body: JSON.stringify({
+                            services: selected
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        price.textContent = data.total;
+                    })
+                    .catch(error => {
+                        console.error("Erreur lors du calcul du total :", error);
+                    });
             }
 
             checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', updatePrice);
-            })
+                checkbox.addEventListener('change', updateTotal);
+            });
         });
 
         // Mobile menu toggle

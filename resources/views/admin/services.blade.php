@@ -27,7 +27,7 @@
                             <i class="fas fa-briefcase mr-3"></i>
                             Portfolio
                         </a>
-                        <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
+                        <a href="{{ route('admin.statistiques') }}#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
                             <i class="fas fa-chart-line mr-3"></i>
                             Statistiques
                         </a>

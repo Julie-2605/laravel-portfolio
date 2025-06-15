@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body class="bg-gray-100 min-h-screen flex flex-col">
     <!-- Header avec lien de retour -->
     <header class="bg-white shadow-sm">
@@ -26,12 +28,15 @@
     <main class="flex-grow flex items-center justify-center p-6">
         <div class="max-w-md w-full">
             <!-- Logo ou image -->
-            <div class="text-center mb-8">
+            <div class="flex flex-col items-center gap-3 text-center mb-8">
                 <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-600 text-white mb-4">
                     <i class="fas fa-user-lock text-3xl"></i>
                 </div>
                 <h2 class="text-3xl font-bold text-gray-900">Connexion</h2>
                 <p class="text-gray-600 mt-2">Accédez à votre espace d'administration</p>
+                <a href="{{ route('register') }}" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-300">
+                    S'inscrire
+                </a>
             </div>
 
             <!-- Alerte d'erreur (conditionnelle) -->
@@ -52,7 +57,7 @@
             <div class="bg-white py-8 px-6 shadow rounded-lg">
                 <form action="{{ route('login.attempt') }}" method="POST" class="space-y-6">
                     @csrf
-                    
+
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Adresse email</label>
                         <div class="mt-1 relative rounded-md shadow-sm">
@@ -105,13 +110,6 @@
                     </div>
                 </form>
             </div>
-
-            <!-- Lien d'aide -->
-            <div class="text-center mt-6">
-                <p class="text-sm text-gray-600">
-                    Besoin d'aide? <a href="#" class="font-medium text-blue-600 hover:text-blue-500">Contactez l'administrateur</a>
-                </p>
-            </div>
         </div>
     </main>
 
@@ -129,4 +127,5 @@
         // Vous pouvez ajouter un script pour afficher/masquer le mot de passe si nécessaire
     </script>
 </body>
+
 </html>

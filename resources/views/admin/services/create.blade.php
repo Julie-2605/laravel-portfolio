@@ -27,7 +27,7 @@
                             <i class="fas fa-briefcase mr-3"></i>
                             Portfolio
                         </a>
-                        <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
+                        <a href="{{ route('admin.statistiques') }}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
                             <i class="fas fa-chart-line mr-3"></i>
                             Statistiques
                         </a>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="relative">
                         <button class="flex items-center text-gray-700 focus:outline-none">
-                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('asset/project-dev.png') }}" alt="Avatar">
+                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('asset/project-dev.png') }}" alt="Avatar"w>
                             <span class="mx-2">Admin</span>
                             <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>

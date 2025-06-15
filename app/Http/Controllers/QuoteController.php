@@ -9,13 +9,6 @@ use Illuminate\Support\Facades\Mail;
 
 class QuoteController extends Controller
 {
-    // public function showForm()
-    // {
-    //     $services = Service::all();
-
-    //     return view('devis.form', compact('services'));
-    // }
-
     public function submit(Request $request)
     {
         $validated = $request->validate([
@@ -24,29 +17,43 @@ class QuoteController extends Controller
             'services' => 'required|array|min:1',
             'details' => 'string',
         ]);
-        
-        Mail::raw($validated['details'], function ($mail) use ($validated) {
+
+        $services = Service::whereIn('id', $validated['services'])->get();
+        $total = $services->sum('price');
+
+        $body = "Demande de devis\n\n";
+        $body .= "Nom : {$validated['name']}\n";
+        $body .= "Email : {$validated['email']}\n\n";
+        $body .= "Services sélectionnés :\n";
+
+        foreach ($services as $service) {
+            $body .= "- {$service->name} : " . number_format($service->price, 2) . " €\n";
+        }
+
+        $body .= "\nTotal estimé : " . number_format($total, 2) . " €\n";
+
+        if (!empty($validated['details'])) {
+            $body .= "\nDétails supplémentaires :\n" . $validated['details'];
+        }
+
+        Mail::raw($body, function ($mail) use ($validated) {
             $mail->to('julie.cariou2605@gmail.com')
                 ->from('julie.cariou2605@gmail.com', 'Portfolio - Devis')
                 ->replyTo($validated['email'], $validated['name'])
-                ->subject('Demande de devis pour services : ' . implode(', ', $validated['services']));
+                ->subject('Nouvelle demande de devis');
         });
-        // Mail::send('portfolio', ['name' => $validated['name'], 'body' => 'tesst'], function ($mail) use ($validated) {
-        //     $mail->to('julie.cariou2605@gmail.com')
-        //      ->from('juile.cariou2605@gmail.com', 'Portfolio - Devis')
-        //      ->replyTo($validated['email'], $validated['name'])
-        //      ->subject($validated['details']);
-        // });
 
         return redirect()->back()->with('success-quote', 'Votre demande de devis a été envoyée.');
     }
 
-    public function priceQuote(Request $request)
-    {
-        $services = Service::whereIn('id', $request->services)->get();
-        $total = $services->sum('price');
+    public function calculate(Request $request) {
+        $serviceIds = $request->input('services', []);
 
-        return $total;
+        $total = Service::whereIn('id', $serviceIds)->sum('price');
+
+        return response()->json([
+            'total' => number_format($total, 2),
+        ]);
     }
 
     /**

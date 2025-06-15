@@ -45,4 +45,9 @@ class AdminController extends Controller
 
         return view('admin.services', compact('services'));
     }
+
+    public function statistiques()
+    {
+        return view('admin.statistiques');
+    }
 }

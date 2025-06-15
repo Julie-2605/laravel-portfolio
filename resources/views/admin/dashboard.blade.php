@@ -29,7 +29,7 @@
                             <i class="fas fa-briefcase mr-3"></i>
                             Portfolio
                         </a>
-                        <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
+                        <a href="{{ route('admin.statistiques') }}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
                             <i class="fas fa-chart-line mr-3"></i>
                             Statistiques
                         </a>
@@ -47,11 +47,14 @@
                         </a>
                     </nav>
                     <div class="px-4 py-6">
-                        <a href="{{ route('portfolio') }}" class="flex items-center text-gray-300 hover:text-white">
-                            <i class="fas fa-sign-out-alt mr-3"></i>
-                            Déconnexion
-                        </a>
+                        @auth
+                        <form method="POST" action="{{ route('logout') }}" class="flex items-center text-gray-300 hover:text-white">
+                            @csrf
+                            <button type="submit"><i class="fas fa-sign-out-alt mr-3"></i>Déconnexion</button>
+                        </form>
+                        @endauth
                     </div>
+
                 </div>
             </div>
         </div>
